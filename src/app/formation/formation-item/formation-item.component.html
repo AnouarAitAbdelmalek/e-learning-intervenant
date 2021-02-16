@@ -1,0 +1,86 @@
+<br>
+<mat-card class="mat-elevation-z0">
+      <mat-card-header>
+          
+          <div>
+              <img style="height: 250px;" src="{{formation.image}}">
+          </div>
+          <div>
+              <p><b>Titre : </b> {{formation.titre}}</p>
+              <p><b>Date début : </b> {{formation.dateDebut | date: 'dd-MM-yyyy' }}</p>
+              <p><b>Date fin : </b> {{formation.dateFin | date: 'dd-MM-yyyy' }}</p>
+              <p><b>Nombre participants : </b> {{formation.etudiants ? formation.etudiants.length : 0}}</p>
+              <p><b>Prix : </b> {{formation.prix}} DH</p>
+              
+          </div>
+
+          <br>
+              
+            
+                <mat-card class="seance-container">
+                  <b>Description: </b>
+                  <div id="description">
+                    <p>{{formation.description}}</p>
+                </div>
+                </mat-card>
+
+                
+           
+          
+      </mat-card-header>
+  
+     
+
+      <br>
+      <br>
+      <br>
+      
+
+      <mat-card-content >
+        
+          
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <div><h1><mat-icon>list</mat-icon> Séances</h1></div>
+              </mat-expansion-panel-header>
+              <br>
+              <div id="seances">
+            
+                <mat-card class="seance-container" *ngFor="let seance of seances; let i=index">
+                  <div style="display: flex;">
+                    <span><b>Séance {{i+1}}:</b></span>                    
+                  </div>
+                  
+                  
+                  <mat-card-content class="card-seance">
+                    <div><b>Titre : </b> {{seance.titre}}</div>
+                    <div><b>Créneau horaire : </b> {{seance.creneau}}</div>
+                    <span class="example-spacer"></span>
+                      <button mat-raised-button type="button" (click)="goToSeance(seance.id)" >
+                        <mat-icon>visibility</mat-icon> Voir contenu
+                      </button>
+                                       
+
+                  </mat-card-content>
+                </mat-card>
+   
+              </div>
+          </mat-expansion-panel>
+
+          <br>
+          <br>
+
+          <mat-expansion-panel hideToggle [disabled]="true" [expanded]="false" class="evaluation" (click)="goToEvaluation(formation.id)">
+            <mat-expansion-panel-header>
+                <div><h1><mat-icon>quiz</mat-icon> Evaluation </h1></div>
+              </mat-expansion-panel-header>
+          </mat-expansion-panel>
+                    
+      
+        </mat-card-content>
+
+  </mat-card>
+
+
+

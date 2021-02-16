@@ -1,0 +1,145 @@
+<!-- <br>
+<form [formGroup]="creneauForm"  (ngSubmit)="onCreneauSubmit()">
+<div class="questions">
+    <mat-card class="question-container">
+        <p><b>Créneau de l'examen :</b></p>
+        <mat-card-content style="display: flex; justify-content: space-between;">
+            
+            <mat-form-field class="creneau" appearance="fill">
+              <mat-label>Choisir le jour</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="formation.dateDebut" [max]="formation.dateFin" formControlName="jour" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+  
+            <mat-form-field class="creneau" appearance="fill">
+              <mat-label>Créneau</mat-label>
+              <mat-select required formControlName="creneau">
+                <mat-option>--</mat-option>
+                <mat-option value="1">8h - 10h</mat-option>
+                <mat-option value="2">10h - 12h</mat-option>
+                <mat-option value="3">14h - 16h</mat-option>
+                <mat-option value="4">16h - 18h</mat-option>
+              </mat-select>
+            </mat-form-field>
+  
+            <div>
+              <button mat-raised-button style="background-color: #222f3e; color: white;" type="submit" >
+                <mat-icon>edit</mat-icon> Modifier le créneau
+              </button>
+            </div>
+              
+       
+            
+        </mat-card-content>
+        
+      </mat-card>
+</div>   
+</form> -->
+<br>
+<div class="questions">
+            
+    <mat-card class="question-container" *ngFor="let question of questions" >
+      <div style="display: flex;" >
+        <span><b style="color: brown;">Question {{question.numeroDeQuestion}} :</b></span>
+        <span class="example-spacer"></span>
+        <button mat-mini-fab color="warn" type="button" (click)="openDialog(question)" >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      
+      <mat-card-content class="card-question">
+        <div style="font-size: 1.2em;"><b>Enoncé : </b> {{question.enonce}}</div>
+        <br>
+        <div style="font-size: 1.2em;"><b>Choix : </b>
+            
+            <div style="padding-left: 25px;" *ngFor="let choix of question.choix; let i=index ">
+              <b> {{i+1}}</b> - {{choix.valeurChoix}}
+            </div>
+        </div>
+        <br>   
+        <div style="font-size: 1.2em;">
+            <b>Bonne réponse : </b> {{question.bonneReponse}}  
+        </div>                     
+
+      </mat-card-content>
+    </mat-card>
+
+    
+
+  </div>
+
+  <br>
+
+<form [formGroup]="questionForm" class="questions" (ngSubmit)="onQuestionSubmit()">
+
+    <mat-card class="question-container" >
+      <p><b>Nouvelle question:</b></p>
+      <mat-card-content class="new-card-question">
+          <mat-form-field  class="form-fields" appearance="fill"  style="width: 100%;">
+              <mat-label>Enoncé</mat-label>
+              <input required matInput formControlName="enonce"  placeholder="Enoncé">
+          </mat-form-field>
+
+          <div formArrayName="choix"
+          *ngFor="let item of getControls(); let i = index;">
+            <div [formGroupName]="i" style="display: flex;">
+                <mat-form-field  class="form-fields" appearance="fill">
+                    <mat-label>Choix {{i+1}}</mat-label>
+                    <input matInput required formControlName="valeurChoix"  placeholder="Valeur du choix">
+                </mat-form-field>
+                <span class="example-spacer"></span>
+                <div>
+                    <button mat-mini-fab color="warn" type="button" (click)="deleteChoix(i)">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+            </div>
+          </div>
+
+          <div>
+            <button mat-raised-button style="background-color: #222f3e; color: white;" type="button" (click)="addChoix()">
+              <mat-icon>add</mat-icon> Nouveau choix
+            </button>
+          </div>
+          <br>
+          <br>
+          <div>
+            <mat-form-field appearance="fill" style="width: 100%;">
+                <mat-label>Réponse correcte</mat-label>
+                <mat-select formControlName="bonneReponse" required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of getControls();" value={{item.value.valeurChoix}}>{{item.value.valeurChoix}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+    
+      </mat-card-content>
+      <br>
+      <mat-card-footer style="display: flex; justify-content: center;">
+        <div style="margin: 5px;">
+            <button mat-raised-button
+            color="primary" 
+            style="font-size: 1.2em; margin-bottom: 25px;
+            " type="submit"
+            [disabled]="!questionForm.valid"
+            >
+              <mat-icon>add</mat-icon> Ajouter question
+            </button>
+          </div>
+          
+      </mat-card-footer>
+
+      
+      
+    </mat-card>
+
+
+  </form>
+
+  <br>
+
+
+
+

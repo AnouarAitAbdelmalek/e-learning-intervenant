@@ -1,0 +1,128 @@
+<br>
+<mat-card class="support-container">
+    <mat-card-content class="card-seance">
+      <div><b>Titre : </b> {{seance.titre}}</div>
+      <div><b>Créneau horaire : </b> {{seance.creneau}}</div>                        
+
+    </mat-card-content>
+  </mat-card>
+
+
+  <br>
+
+  <div class="support-container" style="border-radius: 5px;">
+    <mat-card-content class="card-comments">
+      
+  <form [formGroup]="linkForm" (ngSubmit)="onLinkSubmit()">
+
+    <mat-card >
+      <p style="font-size: 1.2em;"><b>Lien de la réunion :</b></p>
+      <mat-card-content style="display: flex;">
+        
+        <mat-form-field appearance="outline" style="width: 100%;" >
+          
+          <input matInput formControlName="path" [attr.disabled]="true" placeholder="Lien">
+          
+        </mat-form-field>
+        <span class="example-spacer"></span>
+          <button mat-raised-button style="height: 60px; margin: 5px 0 0 10px; font-size: 1em;" color="primary" type="submit" 
+          >
+            Générer
+          </button>
+          
+      </mat-card-content>
+      
+    </mat-card>
+
+
+  </form>
+  </mat-card-content>
+</div>
+
+  <br>
+
+    <form [formGroup]="supportForm"  (ngSubmit)="onSubmit()">
+
+        <mat-card class="support-container" id="support-container">
+          <p><b>Nouveau support:</b></p>
+          <mat-card-content class="new-card-support">
+            
+            <div id="support-upload">
+            <mat-form-field appearance="outline" class="form-fields"  >
+                <mat-label>Choisir une support</mat-label>
+                <ngx-mat-file-input  (change)="onFileSelected($event)" #removableInput formControlName="file" ></ngx-mat-file-input>
+                <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+              <div id="div-btn">
+              <button id="add-button" mat-fab type="button" type="submit" [disabled]="!supportForm.valid" >
+                <mat-icon>add</mat-icon> Ajouter support
+              </button>
+                </div>
+              
+          </mat-card-content>
+          
+        </mat-card>
+
+
+      </form>
+
+      <br>
+
+
+<mat-card class="support-container">
+    <p style="font-size: 1.2em;"><b>Supports: </b></p>
+    <mat-card-content class="card-supports">
+      <div *ngFor="let support of obs | async;" style="display: flex;">
+        <div><a target="_blank" href={{support.path}}> {{support.nom}} </a></div>
+        <span class="example-spacer"></span>
+                    <button mat-mini-fab color="warn" type="button" (click)="openDialog(support)" >
+                      <mat-icon>close</mat-icon>
+                    </button>
+      </div>
+      <br>        
+      
+
+    </mat-card-content>
+  </mat-card>
+
+  <br>
+  <br>
+
+  <mat-card class="support-container">
+    <p style="font-size: 1.2em;"><b>Commentaires: </b></p>
+    <mat-card-content class="card-comments">
+      <mat-card *ngFor="let commentaire of obsCommentaire | async;" style="display: flex;">
+        <p><b>{{commentaire.utilisateur.nom}} {{commentaire.utilisateur.prenom}}</b></p>
+        <mat-card-content>
+          <p> {{commentaire.contenu}} </p>
+          <span class="example-spacer"></span>
+        <p>{{commentaire.date}}</p>
+      </mat-card-content>
+        
+      </mat-card>
+      <br>
+      <form [formGroup]="commentaireForm"  (ngSubmit)="onCommentaireSubmit()">
+      <mat-card style="display: flex;">
+        <mat-card-content>
+          <mat-form-field appearance="outline" style="width: 100%;" >
+            <mat-label>Nouveau commentaire</mat-label>
+            <input required matInput formControlName="contenu"  placeholder="Commentaire">
+            
+          </mat-form-field>
+          <span class="example-spacer"></span>
+            <button mat-raised-button style="height: 60px; margin: 5px 0 0 10px;" color="primary" type="submit" [disabled]="!commentaireForm.valid" >
+              <mat-icon>add</mat-icon>
+            </button>
+        </mat-card-content>
+      </mat-card>
+
+    </form>
+      <br>
+      
+
+    </mat-card-content>
+  </mat-card>
