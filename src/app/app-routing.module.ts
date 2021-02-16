@@ -7,9 +7,13 @@ import { EtudiantListComponent } from './etudiant/etudiant-list/etudiant-list.co
 import { FormationItemComponent } from './formation/formation-item/formation-item.component';
 import { FormationListComponent } from './formation/formation-list/formation-list.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { LoginComponent } from './authentification/login/login.component';
 
 const routes: Routes = [
-  
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: '',
     component: SidebarComponent,
