@@ -5,6 +5,6 @@ export class Commentaire {
     seance!: Seance;
     contenu!: String;
     date!: Date;
-    utilisateur!: Utilisateur;
+    proprietaire!: Utilisateur;
 
 }

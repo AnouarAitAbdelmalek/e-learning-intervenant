@@ -15,7 +15,7 @@ import { FormationService } from 'src/app/formation/service/formation.service';
   styleUrls: ['./evaluation-item.component.css']
 })
 export class EvaluationItemComponent implements OnInit {
-
+  hasEvaluation:Boolean=false;
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute, 
     public dialog: MatDialog,
@@ -67,9 +67,9 @@ export class EvaluationItemComponent implements OnInit {
 
     this.formationService.find(id).subscribe(
       (data) => {
-        this.formation = data;
-        this.evaluation = this.formation.evaluation;
-        this.questions = this.evaluation.questions;
+        this.formation = data[0];
+        //this.questions=this.formation.evaluation.questions;
+        console.log(this.formation);
 
     //     date = this.evaluation.date;
     // if(date.getHours() === 8)
@@ -114,9 +114,15 @@ export class EvaluationItemComponent implements OnInit {
   onQuestionSubmit(){
     let question = new Question();
     question = this.questionForm.value;
-    question.numeroDeQuestion = this.questions.length+1;
+    console.log(question);
+    if(this.questions===null) question.numeroDeQuestion=1;
+    else  question.numeroDeQuestion = this.questions.length+1;
+
+    
     this.questions.push(question);
-    this.evaluation.questions=this.questions;
+    this.evaluation.questions.push(question);
+
+    
     this.formation.evaluation = this.evaluation;
     console.log(this.formation);
 
@@ -126,8 +132,16 @@ export class EvaluationItemComponent implements OnInit {
       bonneReponse: '',
       numeroDeQuestion: ''
     })
-    
 
+  }
+  onEvaluationSubmit()
+  {
+    let id = this.activatedRoute.snapshot.params['id'];
+    this.formationService.saveEvaluation(id,this.evaluation).subscribe(result=>
+      {
+        this.router.navigate(['formation/'+id]);
+      });
+    
   }
 
 

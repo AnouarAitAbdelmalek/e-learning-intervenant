@@ -77,13 +77,13 @@ export class SeanceItemComponent implements OnInit {
     
     this.seanceService.find(this.idSeance).subscribe(
       (data) => {
-        this.seance = data;
-        this.path?.setValue(this.seance.path);
+        this.seance = data[0];
+        console.log(this.seance);
       }
     );
 
 
-    this.supportService.findAll().subscribe(
+    this.seanceService.findSupports(this.idSeance).subscribe(
       (data) => {
         this.supports= data
         this.dataSource.data = this.supports
@@ -91,7 +91,7 @@ export class SeanceItemComponent implements OnInit {
       }
     )
 
-    this.commentaireService.findAll().subscribe(
+    this.seanceService.findCommentaires(this.idSeance).subscribe(
       (data) => {
         this.commentaires= data;
         this.commentaireSource.data = this.commentaires;
@@ -110,26 +110,34 @@ export class SeanceItemComponent implements OnInit {
   onSubmit() {
     let support = new Support();
     support.seance = this.seance;
-    support.path="../../../assets/images/"+ this.selectedFile.name;
     support.nom= this.selectedFile.name;
-    this.supportService.save(support).subscribe(
+    console.log(support.nom);
+    this.seanceService.addFile(this.idSeance,this.selectedFile).subscribe(
       (data) => {
-        support= data
-        this.supports.push(support);
+        this.seanceService.findSupports(this.idSeance).subscribe(
+          (data) => {
+            this.supports = data;
+            this.dataSource.data = this.supports;
+          }
+        );
+
       }
     )
   }
 
 
   deleteSupport(support: Support) {
-    const index: number = this.supports.indexOf(support);
-    if(index != -1)
-    {
-
+  
       this.supportService.delete(support.id).subscribe(
         (data) =>{
-          this.supports.splice(index,1);
-          //this.seance.supports= this.supports;
+          console.log("c'fait");
+
+          this.seanceService.findSupports(this.idSeance).subscribe(
+            (result) => {
+              this.supports = result;
+              this.dataSource.data = this.supports;
+            }
+          );
           
         },(error) => {
           alert(support.id)
@@ -145,7 +153,7 @@ export class SeanceItemComponent implements OnInit {
       //     console.log(error);
       //   }
       // )
-    }
+
   }
 
   openDialog(support: Support): void {
@@ -177,11 +185,18 @@ export class SeanceItemComponent implements OnInit {
 
     let commentaire= new Commentaire();
     commentaire.contenu = this.commentaireForm.get('contenu')?.value;
-    commentaire.date = new Date;
+    //commentaire.date = new Date;
     commentaire.seance = this.seance;
-    this.commentaireService.save(commentaire).subscribe(
+    this.seanceService.addComment(this.idSeance,commentaire).subscribe(
       (data) => {
-        this.commentaires.push(data);
+        this.seanceService.findCommentaires(this.idSeance).subscribe(
+          (data) => {
+            this.commentaires= data;
+            this.commentaireSource.data = this.commentaires;
+            this.obsCommentaire= this.commentaireSource.connect();
+          }
+        )
+        
         this.contenu?.setValue('');
 
       }
@@ -195,7 +210,7 @@ export class SeanceItemComponent implements OnInit {
         this.seance.path = this.path?.value;
     this.seanceService.update(this.seance.id, this.seance).subscribe(
       (data) => {
-        console.log(this.seance.path);
+        console.log("khdmat");
       }
     );
       }

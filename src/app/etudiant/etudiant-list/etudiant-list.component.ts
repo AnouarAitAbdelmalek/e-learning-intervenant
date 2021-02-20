@@ -30,7 +30,7 @@ export class EtudiantListComponent implements OnInit {
   ngOnInit(): void {
     this.formationService.find(this.id).subscribe(
       (data) => {
-        this.ETUDIANTS = data.etudiants;
+        this.ETUDIANTS = data[0].etudiants;
         this.dataSource.data= this.ETUDIANTS;
       },
       (error) => console.log(error)

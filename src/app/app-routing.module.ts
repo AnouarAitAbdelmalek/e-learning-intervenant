@@ -8,6 +8,8 @@ import { FormationItemComponent } from './formation/formation-item/formation-ite
 import { FormationListComponent } from './formation/formation-list/formation-list.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { LoginComponent } from './authentification/login/login.component';
+import { AuthGuardService } from './authentification/service/auth-guard.service';
+import { ResultatEvaluationComponent } from './evaluation/resultat-evaluation/resultat-evaluation.component';
 
 const routes: Routes = [
   {
@@ -17,10 +19,11 @@ const routes: Routes = [
   {
     path: '',
     component: SidebarComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
-        redirectTo: 'acceuil',
+        redirectTo: 'formations',
         pathMatch: 'full',
       },
       {
@@ -28,7 +31,7 @@ const routes: Routes = [
         component: AcceuilComponent,
       },
       {
-        path: 'intervenant/:id/formations',
+        path: 'formations',
         component: FormationListComponent,
       },
 
@@ -43,6 +46,10 @@ const routes: Routes = [
       {
         path: 'formation/:id/evaluation',
         component: EvaluationItemComponent,
+      },
+      {
+        path: 'formation/:id/resultats',
+        component: ResultatEvaluationComponent,
       },
       {
         path: 'seance/:id',

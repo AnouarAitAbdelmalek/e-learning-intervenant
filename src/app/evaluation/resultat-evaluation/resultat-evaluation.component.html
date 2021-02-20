@@ -1,0 +1,17 @@
+<br>
+              <div id="passageFormations">
+            
+                <mat-card class="passageFormation-container" *ngFor="let passage of passageFormation; let i=index">
+                  
+                  
+                  
+                  <mat-card-content class="card-passageFormation">
+                    <div><b>Nom : </b> {{passage.etudiant.nom}}</div>
+                    <div><b>Prénom : </b> {{passage.etudiant.prenom}}</div>
+                    <div><b>Résultat : </b> {{passage.pourcentage*100 >= 60 ? "Validé" : "Non validé"}}</div>
+                    <div><b>Pourcentage : </b> {{passage.pourcentage*100 | number: "1.2-2"}}%</div>
+
+                  </mat-card-content>
+                </mat-card>
+   
+              </div>

@@ -12,32 +12,24 @@
 
   <div class="support-container" style="border-radius: 5px;">
     <mat-card-content class="card-comments">
-      
-  <form [formGroup]="linkForm" (ngSubmit)="onLinkSubmit()">
 
-    <mat-card >
-      <p style="font-size: 1.2em;"><b>Lien de la réunion :</b></p>
+    <mat-card>
+
       <mat-card-content style="display: flex;">
         
-        <mat-form-field appearance="outline" style="width: 100%;" >
-          
-          <input matInput formControlName="path" [attr.disabled]="true" placeholder="Lien">
-          
-        </mat-form-field>
+        <div><p style="margin-right: 10px; font-size: 1.2em;"><b>Lien de la réunion : </b> </p> <a href={{seance.path}} target="_blank"> {{seance.path}} </a> </div>
         <span class="example-spacer"></span>
-          <button mat-raised-button style="height: 60px; margin: 5px 0 0 10px; font-size: 1em;" color="primary" type="submit" 
-          >
-            Générer
-          </button>
+  <button mat-raised-button style="height: 60px; margin: 5px 0 0 10px; font-size: 1em;" color="primary" type="button"  (click)="onLinkSubmit()"
+  >
+    Générer
+  </button>
           
       </mat-card-content>
       
     </mat-card>
-
-
-  </form>
   </mat-card-content>
 </div>
+  
 
   <br>
 
@@ -96,7 +88,7 @@
     <p style="font-size: 1.2em;"><b>Commentaires: </b></p>
     <mat-card-content class="card-comments">
       <mat-card *ngFor="let commentaire of obsCommentaire | async;" style="display: flex;">
-        <p><b>{{commentaire.utilisateur.nom}} {{commentaire.utilisateur.prenom}}</b></p>
+        <p><b>{{commentaire.proprietaire.nom}} {{commentaire.proprietaire.prenom}}</b></p>
         <mat-card-content>
           <p> {{commentaire.contenu}} </p>
           <span class="example-spacer"></span>

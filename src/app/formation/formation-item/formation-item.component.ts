@@ -28,10 +28,14 @@ export class FormationItemComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this. formationService.find(this.activatedRoute.snapshot.params['id']).subscribe(
+    this.formationService.find(this.activatedRoute.snapshot.params['id']).subscribe(
       (data) => {
-        this.formation=data;
-        this.seances=this.formation.seances;
+        console.log(data);
+        this.formation=data[0];
+        this.formationService.findSeances(this.formation.id).subscribe((result=>
+          {
+            this.seances=result;
+          }))
       }
     );
   }
@@ -43,6 +47,10 @@ export class FormationItemComponent implements OnInit {
 
   goToEvaluation(id: number) {
     this.router.navigate(['formation/'+id+'/evaluation']);
+  }
+
+  goToResultats(id: number) {
+    this.router.navigate(['formation/'+id+'/resultats']);
   }
 
 }

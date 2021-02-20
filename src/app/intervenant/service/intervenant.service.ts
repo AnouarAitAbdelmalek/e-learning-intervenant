@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Formation } from 'src/app/formation/model/formation';
 import { Intervenant } from '../model/intervenant';
 
 @Injectable({
@@ -11,48 +12,20 @@ export class IntervenantService {
   private intervenantUrl: string;
 
   constructor(private http: HttpClient) {
-    this.intervenantUrl = 'http://localhost:5001/intervenants';
+    this.intervenantUrl = 'http://localhost:8081/api/intervenant';
   }
   public findAll(): Observable<Intervenant[]> {
-    /*let username = 'intervenant';
-    let password = 'intervenant';
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-    });*/
-
-    return this.http.get<Intervenant[]>(this.intervenantUrl);
+    return this.http.get<Intervenant[]>(this.intervenantUrl+"s");
   }
 
   public find(id: number): Observable<Intervenant> {
-    return this.http.get<Intervenant>(`${this.intervenantUrl}/${id}`);
+    return this.http.get<Intervenant>(`${this.intervenantUrl}s/${id}`);
   }
 
-  public save(intervenant: Intervenant) {
-    /*let username = 'intervenant';
-    let password = 'intervenant';
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-    });*/
-
-    return this.http.post<Intervenant>(this.intervenantUrl, intervenant);
-  }
-  delete(id: number): Observable<any> {
-    /*let username = 'intervenant';
-    let password = 'intervenant';
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-    });*/
-
-    return this.http.delete(`${this.intervenantUrl}/${id}`);
+  public findFormations(id: String): Observable<Formation[]> {
+    return this.http.get<Formation[]>(`${this.intervenantUrl}/${id}/formations`);
   }
 
-  public update(id: number,intervenant: Intervenant) {
-    /*let username = 'intervenant';
-    let password = 'intervenant';
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-    });*/
 
-    return this.http.put<Intervenant>(`${this.intervenantUrl}/${id}`,intervenant);
-  }
+
 }

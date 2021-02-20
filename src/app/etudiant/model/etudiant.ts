@@ -9,7 +9,7 @@ export class Etudiant {
     telephone!: string;
     username!: string;
     email!: string;
-    image!: File;
+    image!: string;
     password!: string;
     formations!: Formation[];
 }

@@ -14,33 +14,22 @@ export class SupportService {
   constructor(
     private http: HttpClient
     ) {
-    this.supportUrl = 'http://localhost:5001/supports';
+    this.supportUrl = 'http://localhost:8081/api/support';
   }
 
   public find(id: number): Observable<Support> {
-    return this.http.get<Support>(`${this.supportUrl}/${id}`);
+    return this.http.get<Support>(`${this.supportUrl}s/${id}`);
   }
 
   public findAll(): Observable<Support[]> {
-    return this.http.get<Support[]>(this.supportUrl);
+    return this.http.get<Support[]>(this.supportUrl+"s");
   }
 
   public save(support: Support) {
-    /*let username = 'formation';
-    let password = 'formation';
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-    });*/
-
-    return this.http.post<Support>(this.supportUrl, support);
+    return this.http.post<Support>(this.supportUrl+"s", support);
   }
 
   delete(id: number): Observable<any> {
-    /*let username = 'formation';
-    let password = 'formation';
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(username + ':' + password),
-    });*/
 
     return this.http.delete(`${this.supportUrl}/${id}`);
   }

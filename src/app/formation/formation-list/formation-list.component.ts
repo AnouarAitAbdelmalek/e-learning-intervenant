@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Formation } from '../model/formation';
+import { Intervenant } from 'src/app/intervenant/model/intervenant';
 
 @Component({
   selector: 'app-formation-list',
@@ -15,7 +16,9 @@ import { Formation } from '../model/formation';
 export class FormationListComponent implements OnInit {
 
   FORMATIONS: Formation[] = [];
-  id: number = this.activatedRoute.snapshot.params['id'];
+  intervenant:Intervenant=new Intervenant();
+  identifier:String="";
+  
 
 
 
@@ -35,12 +38,17 @@ export class FormationListComponent implements OnInit {
     
 
   ngOnInit(): void {
+  if(sessionStorage.getItem('userId'))
+  {
+    this.identifier=sessionStorage.getItem('userId') || "0";
+    console.log(this.identifier);
+  }
+
     
-      this.intervenantService.find(this.id).subscribe(
+      this.intervenantService.findFormations(this.identifier).subscribe(
         (data) => {
-          this.FORMATIONS = data.formations;
+          this.FORMATIONS = data;
           this.dataSource.data= this.FORMATIONS;
-          console.log(this.FORMATIONS)
         }, (error) => console.log(error)
       );
     

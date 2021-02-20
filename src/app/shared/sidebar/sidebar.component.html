@@ -11,14 +11,14 @@
     </mat-toolbar>
     <mat-nav-list>
 
-      <mat-expansion-panel class="menu-panel" hideToggle [disabled]="true" [expanded]="false" routerLink="acceuil">
+      <!-- <mat-expansion-panel class="menu-panel" hideToggle [disabled]="true" [expanded]="false" routerLink="acceuil">
         <mat-expansion-panel-header>
           <a mat-list-item disabled>
             <img src="../../../assets/images/home.png" /> Acceuil
           </a>
         </mat-expansion-panel-header>
             
-      </mat-expansion-panel>
+      </mat-expansion-panel> -->
     
     <mat-expansion-panel class="menu-panel" hideToggle [disabled]="true" [expanded]="false" (click)="goToFormations()">
       <mat-expansion-panel-header>
@@ -47,7 +47,7 @@
         <mat-icon>person_outline</mat-icon>
       </a>
       <mat-menu #menu="matMenu">
-        <a mat-menu-item routerLink="logout">
+        <a mat-menu-item (click)="logOut()">
           <mat-icon>exit_to_app</mat-icon> Se déconnecter
         </a>
       </mat-menu>

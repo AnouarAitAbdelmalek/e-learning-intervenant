@@ -20,7 +20,7 @@ export class AuthentificationService {
          map(value => {
            sessionStorage.setItem('jwt',value.jwt)
            sessionStorage.setItem('user',JSON.stringify(value.user));
-           console.log(value);
+           sessionStorage.setItem('userId',value.user.id);
            return value;
          }),
          catchError(err => {
@@ -38,5 +38,7 @@ export class AuthentificationService {
 
   logOut() {
     sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('userId');
   }
 }
